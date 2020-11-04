@@ -12,7 +12,7 @@
     get_url:
       url: https://drive.google.com/file/d/1lrzw1qIVCFzd93sJaPx3SmfNUQ1IVSIs/view?usp=sharing
       dest: /tmp/atlassian-deployment-packages.tar.gz
-      # checksum: sha256:486bcf2d84c2d7b48d8fe0e2a8f7c493e2d1d313c621f97cc2297617c9ca3a34
+      # checksum: sha256:fa1acdef232fcc2a105c304949096cc5072dc2fe2e195c7eaeb6cbc3e35a1f09
 
   - name: Extracting packages from TAR archive
     unarchive:
