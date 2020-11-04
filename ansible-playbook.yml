@@ -1,7 +1,7 @@
 ---
 - name: Play 1
   hosts: localhost
-  remote_user: root
+  #remote_user: root
 
   tasks:
   - name: Ensure the latest version of Ansible is installed
@@ -13,7 +13,7 @@
 
 - name: Play 2
   hosts: localhost
-  remote_user: root
+  #remote_user: root
 
   tasks:
   - name: Ensure the sshd service is started
