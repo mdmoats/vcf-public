@@ -1,0 +1,22 @@
+---
+- name: Play 1
+  hosts: localhost
+  remote_user: root
+
+  tasks:
+  - name: Ensure the latest version of Ansible is installed
+    yum:
+      name: ansible
+      state: latest
+  - name: Test connectivity to localhost
+    ping:
+
+- name: Play 2
+  hosts: localhost
+  remote_user: root
+
+  tasks:
+  - name: Ensure the sshd service is started
+    service:
+      name: sshd
+      state: started
