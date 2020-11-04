@@ -13,7 +13,7 @@
       url: https://vcf-public.s3.us-east-2.amazonaws.com/atlassian-deployment-packages.tar.gz
       dest: /tmp/atlassian-deployment-packages.tar.gz
       # force: yes
-      # checksum: sha256:fa1acdef232fcc2a105c304949096cc5072dc2fe2e195c7eaeb6cbc3e35a1f09
+      checksum: sha256:fa1acdef232fcc2a105c304949096cc5072dc2fe2e195c7eaeb6cbc3e35a1f09
 
   - name: Extracting packages from TAR archive
     unarchive:
@@ -67,7 +67,7 @@
       zone: public
       state: enabled
       
-   - name: Opening local firewall ports for Elasticsearch
+  - name: Opening local firewall ports for Elasticsearch
     firewalld:
       port: 7992-7993/tcp
       permanent: yes
