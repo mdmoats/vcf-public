@@ -1,6 +1,6 @@
 ---
 - name: Play 1
-  hosts: all
+  hosts: localhost.localdomain
   remote_user: root
 
   tasks:
@@ -12,7 +12,7 @@
     ping:
 
 - name: Play 2
-  hosts: all
+  hosts: localhost.localdomain
   remote_user: root
 
   tasks:
