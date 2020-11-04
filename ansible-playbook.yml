@@ -20,3 +20,10 @@
     service:
       name: sshd
       state: started
+      
+  - name: get the rpm or apt package facts
+    package_facts:
+      manager: "auto"
+
+  - name: show apache2 version
+    debug: var=ansible_facts.packages.apache2[0].version
