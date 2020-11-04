@@ -10,9 +10,9 @@
 
   - name: Acquiring installation packages, verifying file integrity
     get_url:
-      url: http://example.com/path/file.conf  !!!!!!!!!!!!!!!
+      url: http://pax-w1-repository.vcf.nres.navy.mil:8081/repository/windows-public/atlassian/atlassian-deployment-packages.tar.gz
       dest: /tmp/atlassian-deployment-packages.tar.gz
-      checksum: sha256:66dffb5228a211e61d6d7ef4a86f5758   !!!!!!!!!!!!
+      checksum: sha256:486bcf2d84c2d7b48d8fe0e2a8f7c493e2d1d313c621f97cc2297617c9ca3a34
 
   - name: Extracting packages from TAR archive
     unarchive:
