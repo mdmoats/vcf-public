@@ -1,0 +1,72 @@
+---
+- name: Play 1 -- Preparing system for deployment
+  hosts: localhost
+
+  tasks:
+  - name: Acquiring installation packages, verifying file integrity
+    get_url:
+      url: http://example.com/path/file.conf
+      dest: /etc/foo.conf
+      checksum: sha256:66dffb5228a211e61d6d7ef4a86f5758
+  - name: Extracting packages from TAR archive
+    unarchive:
+    src: foo.tgz
+    dest: /var/lib/foo
+
+
+
+- name: Play 2 -- Initiating Atlassian suite deployment
+  hosts: localhost
+
+  tasks:
+  - name: Installing Jira v8.13.1
+    shell: /tmp/deployments/atlassian-deployment-packages/atlassian-jira-software-8.13.1-x64.bin -q -varfile jira-response.varfile
+
+  - name: Installing Confluence v7.8.3
+    shell: /tmp/deployments/atlassian-deployment-packages/atlassian-confluence-7.8.3-x64.bin -q -varfile confluence-response.varfile
+
+  - name: Installing BitBucket v7.7.0
+    shell: /tmp/deployments/atlassian-deployment-packages/atlassian-bitbucket-7.7.0-x64.bin -q -varfile bitbucket-response.varfile
+
+
+
+- name: Play 3 -- Updating system security posture
+  hosts: localhost
+
+  tasks:
+  - name: Opening local firewall ports for Jira
+    firewalld:
+      port: 8080/tcp
+      permanent: yes
+      zone: public
+      state: enabled
+
+  - name: Opening local firewall ports for Confluence
+    firewalld:
+      port: 8090/tcp
+      permanent: yes
+      zone: public
+      state: enabled
+
+  # - name: Opening local firewall ports for BitBucket
+  #   firewalld:
+  #     port: 7990/tcp
+  #     permanent: yes
+  #     zone: public
+  #     state: enabled
+
+  - name: Opening local firewall ports for BitBucket
+    firewalld:
+      port: "{{ item }}"
+      permanent: yes
+      state: enabled
+    when: ansible_distribution == 'Red Hat Enterprise Linux'
+    loop:
+      - 7990/tcp
+      - 7992/tcp
+      - 7993/tcp
+
+  - name: Bouncing local firewall
+    systemd:
+      name: firewalld
+      state: reloaded
