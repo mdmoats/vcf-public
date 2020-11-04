@@ -1,5 +1,5 @@
 ---
-- name: Play 1 -- Preparing system for deployment
+- name: Preparing system for deployment
   hosts: localhost
 
   tasks:
@@ -27,7 +27,7 @@
 
 
 
-- name: Play 2 -- Initiating Atlassian suite deployment
+- name: Initiating Atlassian suite deployment
   hosts: localhost
 
   tasks:
@@ -42,7 +42,7 @@
 
 
 
-- name: Play 3 -- Updating system security posture
+- name: Updating system security posture
   hosts: localhost
 
   tasks:
@@ -60,23 +60,20 @@
       zone: public
       state: enabled
 
-  # - name: Opening local firewall ports for BitBucket
-  #   firewalld:
-  #     port: 7990/tcp
-  #     permanent: yes
-  #     zone: public
-  #     state: enabled
-
   - name: Opening local firewall ports for BitBucket
     firewalld:
-      port: "{{ item }}"
+      port: 7990/tcp
       permanent: yes
+      zone: public
       state: enabled
-    when: ansible_distribution == 'Red Hat Enterprise Linux'
-    loop:
-      - 7990/tcp
-      - 7992/tcp
-      - 7993/tcp
+      
+   - name: Opening local firewall ports for Elasticsearch
+    firewalld:
+      port: 7992-7993/tcp
+      permanent: yes
+      zone: public
+      state: enabled
+
 
   - name: Bouncing local firewall
     systemd:
