@@ -16,8 +16,8 @@
 
   - name: Extracting packages from TAR archive
     unarchive:
-    src: /tmp/atlassian-deployment-packages.tar.gz
-    dest: /tmp
+      src: /tmp/atlassian-deployment-packages.tar.gz
+      dest: /tmp
 
   - name: Instaling required dependencies
     yum:
