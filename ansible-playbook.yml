@@ -26,4 +26,4 @@
       manager: "auto"
 
   - name: show apache2 version
-    debug: var=ansible_facts.packages.apache2[0].version
+    debug: var=ansible_facts.packages.ansible[0].version
