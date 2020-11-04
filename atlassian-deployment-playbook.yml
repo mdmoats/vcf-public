@@ -3,15 +3,26 @@
   hosts: localhost
 
   tasks:
+  - name: Checking for OS updates
+    yum:
+      name: '*'
+      state: latest
+
   - name: Acquiring installation packages, verifying file integrity
     get_url:
-      url: http://example.com/path/file.conf
-      dest: /etc/foo.conf
-      checksum: sha256:66dffb5228a211e61d6d7ef4a86f5758
+      url: http://example.com/path/file.conf  !!!!!!!!!!!!!!!
+      dest: /tmp/atlassian-deployment-packages.tar.gz
+      checksum: sha256:66dffb5228a211e61d6d7ef4a86f5758   !!!!!!!!!!!!
+
   - name: Extracting packages from TAR archive
     unarchive:
-    src: foo.tgz
-    dest: /var/lib/foo
+    src: /tmp/atlassian-deployment-packages.tar.gz
+    dest: /tmp
+
+  - name: Instaling required dependencies
+    yum:
+      name: fontconfig
+      state: latest
 
 
 
@@ -20,13 +31,13 @@
 
   tasks:
   - name: Installing Jira v8.13.1
-    shell: /tmp/deployments/atlassian-deployment-packages/atlassian-jira-software-8.13.1-x64.bin -q -varfile jira-response.varfile
+    shell: /tmp/atlassian-deployment-packages/atlassian-jira-software-8.13.1-x64.bin -q -varfile jira-response.varfile
 
   - name: Installing Confluence v7.8.3
-    shell: /tmp/deployments/atlassian-deployment-packages/atlassian-confluence-7.8.3-x64.bin -q -varfile confluence-response.varfile
+    shell: /tmp/atlassian-deployment-packages/atlassian-confluence-7.8.3-x64.bin -q -varfile confluence-response.varfile
 
   - name: Installing BitBucket v7.7.0
-    shell: /tmp/deployments/atlassian-deployment-packages/atlassian-bitbucket-7.7.0-x64.bin -q -varfile bitbucket-response.varfile
+    shell: /tmp/atlassian-deployment-packages/atlassian-bitbucket-7.7.0-x64.bin -q -varfile bitbucket-response.varfile
 
 
 
