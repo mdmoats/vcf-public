@@ -45,43 +45,35 @@
   hosts: localhost
 
   tasks:
-  - name: Opening local firewall ports for Jira
-    shell: firewall-cmd --permanent --zone=public --add-port=8080/tcp
+#   - name: Opening local firewall ports for Jira
 #     firewalld:
 #       port: 8080/tcp
 #       zone: public
 #       state: enabled
 #       permanent: yes
-#       immediate: yes
 
-  - name: Opening local firewall ports for Confluence
-    shell: firewall-cmd --permanent --zone=public --add-port=8090/tcp
+#   - name: Opening local firewall ports for Confluence
 #     firewalld:
 #       port: 8090/tcp
 #       zone: public
 #       state: enabled
 #       permanent: yes
-#       immediate: yes
 
-  - name: Opening local firewall ports for BitBucket
-    shell: firewall-cmd --permanent --zone=public --add-port=7990/tcp
+#   - name: Opening local firewall ports for BitBucket
 #     firewalld:
 #       port: 7990/tcp
 #       zone: public
 #       state: enabled
 #       permanent: yes
-#       immediate: yes
       
-  - name: Opening local firewall ports for Elasticsearch
-    shell: firewall-cmd --permanent --zone=public --add-port=7992/tcp
+#   - name: Opening local firewall ports for Elasticsearch
 #     firewalld:
 #       port: 7992-7993/tcp
 #       zone: public
 #       state: enabled
 #       permanent: yes
-#       immediate: yes
 
   - name: Bouncing local firewall
     systemd:
       name: firewalld
-      state: reloaded
+      state: stopped
