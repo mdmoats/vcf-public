@@ -41,7 +41,7 @@
 
 
 
-- name: Updating system security posture
+- name: Checking system security posture
   hosts: localhost
 
   tasks:
@@ -65,7 +65,7 @@
 #       zone: public
 #       state: enabled
 #       permanent: yes
-      
+
 #   - name: Opening local firewall ports for Elasticsearch
 #     firewalld:
 #       port: 7992-7993/tcp
@@ -77,3 +77,31 @@
     systemd:
       name: firewalld
       state: stopped
+      
+#  - name: Installing SCAP
+#    yum:
+#     name: https://vcf-public.s3.us-east-2.amazonaws.com/scc-5.3.1.rhel7.x86_64.rpm
+#     state: present
+      
+#  - name: Downloading SCAP
+#    get_url:
+#     url: https://vcf-public.s3.us-east-2.amazonaws.com/scc-5.3.1.rhel7.x86_64.rpm
+#      dest: /tmp/scc-5.3.1.rhel7.x86_64.rpm
+
+#  - name: Installing SCAP
+#    shell: rpm -i /tmp/scc-5.3.1.rhel7.x86_64.rpm
+#    warn: no
+
+  - name: Executing SCAP scan
+    shell: /opt/scc/cscc >> /var/log/scap-scan.log
+    
+  - name: Display completion message 
+    debug:
+      msg:
+        - 'The automated Atlassian suite deployment has completed successfully.'
+        - 'Deployment logs are located at /var/log/ansible.log and /var/log/atlassian-deployment.log'
+        - 'SCAP scan results are located in /home/ansible/SCC/Sessions/'
+        - 'Atlassian services are running on the following ports:'
+        - 'Jira ===========> http://localhost:8080'
+        - 'Confluence =====> http://localhost:8090'
+        - 'BitBucket  =====> http://localhost:7990'
